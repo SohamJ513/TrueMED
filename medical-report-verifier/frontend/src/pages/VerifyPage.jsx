@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import QRScanner from '../components/QRScanner';
 import VerificationResult from '../components/VerificationResult';
-import axios from 'axios';
+import api from '../services/api'; // 👈 Use your custom API instance
 
 const VerifyPage = () => {
   const [searchParams] = useSearchParams();
@@ -29,7 +29,8 @@ const VerifyPage = () => {
 
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/qr/verify/${hashToVerify}`);
+      // 👈 Changed to use the 'api' instance. Note the URL is now just `/qr/verify/...`
+      const response = await api.get(`/qr/verify/${hashToVerify}`);
       setResult(response.data);
     } catch (error) {
       console.error('Verification error:', error);
@@ -117,7 +118,6 @@ const VerifyPage = () => {
                     onChange={(e) => setManualHash(e.target.value)}
                     placeholder="0x..."
                     className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
-                    // No maxLength - allows full 66-character hash
                   />
                   <button
                     type="submit"
@@ -141,9 +141,6 @@ const VerifyPage = () => {
               <p className="text-xs text-gray-500 mt-2">
                 Enter the 64-character report hash (starts with 0x) that was generated when the report was issued
               </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Example: 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-              </p>
             </form>
           </div>
         )}
@@ -161,18 +158,6 @@ const VerifyPage = () => {
             <VerificationResult result={result} loading={loading} />
           </div>
         )}
-
-        {/* Info Box */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h4 className="font-semibold text-blue-800 mb-2">How It Works</h4>
-          <ul className="text-sm text-blue-700 space-y-1">
-            <li>✓ Reports are stored on blockchain with unique report hash</li>
-            <li>✓ Each report contains patient ID and lab/hospital ID</li>
-            <li>✓ QR codes contain the report hash for instant verification</li>
-            <li>✓ Labs cannot alter or delete records once issued</li>
-            <li>✓ Anyone can verify authenticity by scanning QR code or entering the hash</li>
-          </ul>
-        </div>
       </div>
     </div>
   );

@@ -1,7 +1,21 @@
 import axios from "axios";
 
+// Smart Base URL: Ensures '/api' is included whether the env var has it or not
+const getBaseURL = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  
+  if (!envUrl) {
+    // Local development fallback
+    return "http://localhost:5000/api";
+  }
+  
+  // If the Vercel URL is exactly "https://truemed.onrender.com" (no /api), add it.
+  // If it already ends with /api, don't duplicate it.
+  return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL: getBaseURL(),
   timeout: 30000, // 30 seconds timeout
   headers: {
     "Content-Type": "application/json",

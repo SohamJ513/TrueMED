@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { verifyReportApi, getReportByHashApi } from "../services/reportService";
+import { downloadFile } from "../services/api"; // 👈 Imported downloadFile
 
 const VerifyReport = () => {
   const fileInputRef = useRef(null);
@@ -15,7 +16,6 @@ const VerifyReport = () => {
   const [filePreview, setFilePreview] = useState(null);
 
   const validateAndSetFile = (selectedFile) => {
-    // Validate file size (max 10MB)
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (selectedFile.size > maxSize) {
       toast.error("File size must be less than 10MB");
@@ -24,7 +24,6 @@ const VerifyReport = () => {
 
     setReportFile(selectedFile);
     
-    // Create preview for images
     if (selectedFile.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -111,15 +110,8 @@ const VerifyReport = () => {
 
     try {
       const response = await getReportByHashApi(hashQuery);
-      console.log("API Response:", response); // Debug log
-      
-      // Handle different response structures
       let reportData = response.data || response;
-      
-      // If the data is nested further
-      if (reportData.data) {
-        reportData = reportData.data;
-      }
+      if (reportData.data) reportData = reportData.data;
       
       setHashResult(reportData);
       toast.success("Report found");
@@ -128,6 +120,16 @@ const VerifyReport = () => {
       toast.error(error.response?.data?.message || "Hash lookup failed");
     } finally {
       setHashLoading(false);
+    }
+  };
+
+  // 👈 New download handler
+  const handleDownload = async (hash) => {
+    try {
+      toast.info("Downloading original file...");
+      await downloadFile(`/reports/report-file/${hash}`, `report-${hash.substring(0, 8)}.pdf`);
+    } catch (error) {
+      toast.error("Failed to download file");
     }
   };
 
@@ -152,7 +154,6 @@ const VerifyReport = () => {
       : "bg-red-100 text-red-800 border-red-200";
   };
 
-  // Helper function to safely get nested values
   const getValue = (obj, ...paths) => {
     for (const path of paths) {
       if (obj && path in obj) {
@@ -367,18 +368,17 @@ const VerifyReport = () => {
                   <p className="text-sm">{verificationResult.verificationSource}</p>
                 </div>
 
+                {/* 👈 Replaced the <a> tag with a button using our downloadFile utility */}
                 {verificationResult.fileStoredInDatabase && verificationResult.reportHash && (
-                  <a
+                  <button
+                    onClick={() => handleDownload(verificationResult.reportHash)}
                     className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 underline mt-2"
-                    href={`${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/reports/report-file/${verificationResult.reportHash}`}
-                    target="_blank"
-                    rel="noreferrer"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                     Download Original File
-                  </a>
+                  </button>
                 )}
               </div>
             </div>
@@ -386,7 +386,7 @@ const VerifyReport = () => {
         </div>
       )}
 
-      {/* Hash Lookup Tab - FIXED VERSION */}
+      {/* Hash Lookup Tab */}
       {activeTab === "hash" && (
         <div className="bg-white rounded-lg shadow p-6">
           <form onSubmit={verifyByHash}>

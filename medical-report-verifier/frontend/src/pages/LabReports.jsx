@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import api from '../services/api';
+import api, { downloadFile } from '../services/api'; // 👈 Imported downloadFile
 
 const LabReports = () => {
   const [reports, setReports] = useState([]);
@@ -58,6 +58,16 @@ const LabReports = () => {
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
     toast.success('Copied to clipboard!');
+  };
+
+  // 👈 Added a clean download handler using the API utility
+  const handleDownload = async (hash, patientId) => {
+    try {
+      toast.info("Downloading report...");
+      await downloadFile(`/reports/report-file/${hash}`, `report-${patientId}.pdf`);
+    } catch (error) {
+      toast.error("Failed to download report");
+    }
   };
 
   if (loading) {
@@ -263,13 +273,9 @@ const LabReports = () => {
                         >
                           View
                         </Link>
+                        {/* 👈 Fixed the download button to use the API utility */}
                         <button
-                          onClick={() => {
-                            window.open(
-                              `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/reports/report-file/${report.reportHash}`,
-                              '_blank'
-                            );
-                          }}
+                          onClick={() => handleDownload(report.reportHash, report.patientId)}
                           className="text-green-600 hover:text-green-800"
                         >
                           Download
