@@ -24,55 +24,55 @@ const Navbar = () => {
   const getNavLinks = () => {
     if (!user) {
       return [
-        { name: "Home", path: "/", icon: "🏠" },
-        { name: "Features", path: "/#features", icon: "⭐" },
-        { name: "How It Works", path: "/#how-it-works", icon: "📖" },
+        { name: "Home", path: "/" },
+        { name: "Features", path: "/#features" },
+        { name: "How It Works", path: "/#how-it-works" },
       ];
     }
 
     switch (user.role) {
       case "patient":
         return [
-          { name: "Dashboard", path: "/dashboard", icon: "📊" },
-          { name: "My Reports", path: "/my-reports", icon: "📄" },
-          { name: "Shared", path: "/shared-reports", icon: "🔗" },
-          { name: "Verify", path: "/verify", icon: "🔍" },
-          { name: "QR Verify", path: "/verify-qr", icon: "📱" },
-          { name: "Consent", path: "/consent-management", icon: "🔐" },
+          { name: "Dashboard", path: "/dashboard" },
+          { name: "My Reports", path: "/my-reports" },
+          { name: "Shared", path: "/shared-reports" },
+          { name: "Verify", path: "/verify" },
+          { name: "QR Verify", path: "/verify-qr" },
+          { name: "Consent", path: "/consent-management" },
         ];
       
       case "lab":
         return [
-          { name: "Dashboard", path: "/dashboard", icon: "📊" },
-          { name: "Upload", path: "/upload", icon: "📤" },
-          { name: "Reports", path: "/lab-reports", icon: "📋" },
-          { name: "Verify", path: "/verify", icon: "🔍" },
-          { name: "QR Verify", path: "/verify-qr", icon: "📱" },
+          { name: "Dashboard", path: "/dashboard" },
+          { name: "Upload", path: "/upload" },
+          { name: "Reports", path: "/lab-reports" },
+          { name: "Verify", path: "/verify" },
+          { name: "QR Verify", path: "/verify-qr" },
         ];
       
       case "employer":
         return [
-          { name: "Dashboard", path: "/dashboard", icon: "📊" },
-          { name: "Shared", path: "/shared-reports", icon: "🔗" },
-          { name: "Requests", path: "/access-requests", icon: "📨" },
-          { name: "Verify", path: "/verify", icon: "🔍" },
-          { name: "QR Verify", path: "/verify-qr", icon: "📱" },
+          { name: "Dashboard", path: "/dashboard" },
+          { name: "Shared", path: "/shared-reports" },
+          { name: "Requests", path: "/access-requests" },
+          { name: "Verify", path: "/verify" },
+          { name: "QR Verify", path: "/verify-qr" },
         ];
       
       case "admin":
         return [
-          { name: "Dashboard", path: "/dashboard", icon: "📊" },
-          { name: "Users", path: "/admin/users", icon: "👥" },
-          { name: "Reports", path: "/admin/reports", icon: "📄" },
-          { name: "Analytics", path: "/admin/analytics", icon: "📈" },
-          { name: "QR Verify", path: "/verify-qr", icon: "📱" },
+          { name: "Dashboard", path: "/dashboard" },
+          { name: "Users", path: "/admin/users" },
+          { name: "Reports", path: "/admin/reports" },
+          { name: "Analytics", path: "/admin/analytics" },
+          { name: "QR Verify", path: "/verify-qr" },
         ];
       
       default:
         return [
-          { name: "Home", path: "/", icon: "🏠" },
-          { name: "Features", path: "/#features", icon: "⭐" },
-          { name: "How It Works", path: "/#how-it-works", icon: "📖" },
+          { name: "Home", path: "/" },
+          { name: "Features", path: "/#features" },
+          { name: "How It Works", path: "/#how-it-works" },
         ];
     }
   };
@@ -81,10 +81,10 @@ const Navbar = () => {
   const getRoleConfig = () => {
     if (!user) return null;
     const roleConfigs = {
-      patient: { color: "bg-blue-100 text-blue-700", icon: "👤", label: "Patient" },
-      lab: { color: "bg-green-100 text-green-700", icon: "🏥", label: "Lab" },
-      employer: { color: "bg-purple-100 text-purple-700", icon: "💼", label: "Employer" },
-      admin: { color: "bg-red-100 text-red-700", icon: "⚙️", label: "Admin" },
+      patient: { color: "bg-blue-100 text-blue-700", label: "Patient" },
+      lab: { color: "bg-green-100 text-green-700", label: "Lab" },
+      employer: { color: "bg-purple-100 text-purple-700", label: "Employer" },
+      admin: { color: "bg-red-100 text-red-700", label: "Admin" },
     };
     return roleConfigs[user.role];
   };
@@ -140,7 +140,6 @@ const Navbar = () => {
                     }`
                   }
                 >
-                  <span className="text-base">{link.icon}</span>
                   <span>{link.name}</span>
                 </NavLink>
               ))}
@@ -155,7 +154,6 @@ const Navbar = () => {
                     {/* Role Badge */}
                     {roleConfig && (
                       <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${roleConfig.color}`}>
-                        <span>{roleConfig.icon}</span>
                         <span>{roleConfig.label}</span>
                       </span>
                     )}
@@ -196,9 +194,7 @@ const Navbar = () => {
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                    Menu
                   </button>
                 </>
               ) : (
@@ -236,7 +232,6 @@ const Navbar = () => {
                   <p className="font-medium text-gray-900">{getDisplayName()}</p>
                   {roleConfig && (
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${roleConfig.color}`}>
-                      <span>{roleConfig.icon}</span>
                       <span>{roleConfig.label}</span>
                     </span>
                   )}
@@ -256,7 +251,6 @@ const Navbar = () => {
                   }
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="text-lg">{link.icon}</span>
                   <span>{link.name}</span>
                 </NavLink>
               ))}
@@ -267,7 +261,6 @@ const Navbar = () => {
                   className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="text-lg">👤</span>
                   <span>Profile</span>
                 </NavLink>
                 <NavLink
@@ -275,7 +268,6 @@ const Navbar = () => {
                   className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="text-lg">⚙️</span>
                   <span>Settings</span>
                 </NavLink>
                 <button
@@ -285,7 +277,6 @@ const Navbar = () => {
                   }}
                   className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition"
                 >
-                  <span className="text-lg">🚪</span>
                   <span>Logout</span>
                 </button>
               </div>
@@ -299,11 +290,6 @@ const Navbar = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-96 max-w-full shadow-2xl transform transition-all">
             <div className="text-center">
-              <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Confirm Logout</h3>
               <p className="text-gray-500 mb-6">
                 Are you sure you want to logout from your account?

@@ -8,32 +8,26 @@ const Home = () => {
     {
       title: "Blockchain Anchoring",
       description: "Every report hash is permanently stored on the Ethereum Sepolia testnet, ensuring tamper-proof verification.",
-      icon: "⛓️",
     },
     {
       title: "SHA-256 Hashing",
       description: "Each file generates a unique cryptographic fingerprint that changes if the file is modified.",
-      icon: "🔐",
     },
     {
       title: "Role-Based Access",
       description: "Patients, Labs, and Employers each have dedicated dashboards with appropriate permissions.",
-      icon: "👥",
     },
     {
       title: "Consent Management",
       description: "Patients control who can access their medical reports with time-limited sharing permissions.",
-      icon: "📋",
     },
     {
       title: "QR Code Verification",
       description: "Generate and scan QR codes for instant report verification on any device.",
-      icon: "📱",
     },
     {
       title: "Real-time Validation",
       description: "Verify report authenticity instantly with blockchain-powered checks.",
-      icon: "⚡",
     },
   ];
 
@@ -48,7 +42,6 @@ const Home = () => {
     {
       name: "Patient",
       description: "View your medical reports, manage sharing permissions, and track verification history.",
-      icon: "👤",
       color: "from-blue-50 to-blue-100 border-blue-200",
       textColor: "text-blue-700",
       link: "/register",
@@ -56,7 +49,6 @@ const Home = () => {
     {
       name: "Lab/Hospital",
       description: "Upload medical reports, anchor them on blockchain, and manage uploaded records.",
-      icon: "🏥",
       color: "from-green-50 to-green-100 border-green-200",
       textColor: "text-green-700",
       link: "/register",
@@ -64,7 +56,6 @@ const Home = () => {
     {
       name: "Employer",
       description: "Verify shared medical reports, request access, and ensure document authenticity.",
-      icon: "💼",
       color: "from-purple-50 to-purple-100 border-purple-200",
       textColor: "text-purple-700",
       link: "/register",
@@ -72,7 +63,6 @@ const Home = () => {
     {
       name: "Admin",
       description: "Manage users, monitor system health, and oversee all reports.",
-      icon: "⚙️",
       color: "from-red-50 to-red-100 border-red-200",
       textColor: "text-red-700",
       link: "/register",
@@ -80,10 +70,10 @@ const Home = () => {
   ];
 
   const steps = [
-    { step: "01", title: "Upload Report", desc: "Lab uploads medical report with patient details", icon: "📄" },
-    { step: "02", title: "Hash Generation", desc: "SHA-256 hash is computed from file content", icon: "🔒" },
-    { step: "03", title: "Blockchain Anchor", desc: "Hash is permanently stored on Ethereum", icon: "⛓️" },
-    { step: "04", title: "Instant Verify", desc: "Any user can verify authenticity instantly", icon: "✅" },
+    { step: "01", title: "Upload Report", desc: "Lab uploads medical report with patient details" },
+    { step: "02", title: "Hash Generation", desc: "SHA-256 hash is computed from file content" },
+    { step: "03", title: "Blockchain Anchor", desc: "Hash is permanently stored on Ethereum" },
+    { step: "04", title: "Instant Verify", desc: "Any user can verify authenticity instantly" },
   ];
 
   return (
@@ -100,7 +90,7 @@ const Home = () => {
             <div>
               <div className="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full mb-6 border border-blue-100">
                 <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
-                <span className="text-sm font-medium text-blue-700">⚡ Tamper-proof medical trust layer</span>
+                <span className="text-sm font-medium text-blue-700">Tamper-proof medical trust layer</span>
               </div>
               <h1 className="mb-6 text-4xl font-bold leading-tight text-gray-900 sm:text-5xl lg:text-6xl">
                 Blockchain-Based
@@ -119,9 +109,6 @@ const Home = () => {
                       className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-blue-800 transition shadow-md hover:shadow-lg"
                     >
                       Get Started
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
                     </Link>
                     <Link
                       to="/login"
@@ -136,9 +123,6 @@ const Home = () => {
                     className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-blue-800 transition shadow-md"
                   >
                     Go to Dashboard
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
                   </Link>
                 )}
               </div>
@@ -177,9 +161,6 @@ const Home = () => {
               key={idx}
               className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100"
             >
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">{item.icon}</span>
-              </div>
               <div className="text-sm font-bold text-blue-600 mb-2">{item.step}</div>
               <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
               <p className="text-sm text-gray-500">{item.desc}</p>
@@ -203,7 +184,6 @@ const Home = () => {
               key={idx}
               className="bg-white rounded-xl shadow-md p-6 flex gap-4 hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100 group"
             >
-              <div className="text-3xl group-hover:scale-110 transition-transform">{feature.icon}</div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
@@ -228,14 +208,10 @@ const Home = () => {
               key={idx}
               className={`bg-gradient-to-br ${role.color} rounded-xl border p-6 hover:shadow-xl transition-all hover:-translate-y-1`}
             >
-              <div className="text-4xl mb-3">{role.icon}</div>
               <h3 className={`font-semibold ${role.textColor} mb-2`}>{role.name}</h3>
               <p className="text-sm text-gray-600 mb-4">{role.description}</p>
               <Link to={role.link} className={`${role.textColor} text-sm font-medium hover:underline inline-flex items-center gap-1`}>
                 Register as {role.name}
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
               </Link>
             </div>
           ))}
